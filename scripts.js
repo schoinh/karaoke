@@ -21,12 +21,10 @@ const initialState = {
       arrayPosition: 0,
     },
   }
-  songLyricsArray: songLyricsArray,
-  arrayPosition: 0,
 }
 
-//REDUCER WILL GO HERE
-const reducer = (state = initialState, action) => {
+//lyricChangeReducer WILL GO HERE
+const lyricChangeReducer = (state = initialState.songsById, action) => {
   switch (action.type) {
     case 'NEXT_LYRIC':
       let newArrayPosition = state.arrayPosition + 1;
@@ -47,14 +45,14 @@ const reducer = (state = initialState, action) => {
 // JEST TESTS+ SETUP WILL GO HERE
 const { expect } = window;
 
-expect(reducer(initialState, { type: null })).toEqual(initialState);
+expect(lyricChangeReducer(initialState.songsById, { type: null })).toEqual(initialState);
 
-expect(reducer(initialState, { type: 'NEXT_LYRIC' })).toEqual({
+expect(lyricChangeReducer(initialState.songsById, { type: 'NEXT_LYRIC', currentSongId: 2 })).toEqual({
   songLyricsArray: songLyricsArray,
   arrayPosition: 1
 });
 
-expect(reducer({
+expect(lyricChangeReducer({
   songLyricsArray: songLyricsArray,
   arrayPosition: 0,
 },
@@ -63,7 +61,7 @@ expect(reducer({
 
 //REDUX STORE
 const { createStore } = Redux;
-const store = createStore(reducer);
+const store = createStore(lyricChangeReducer);
 
 // RENDERING STATE IN DOM
 const renderLyrics = () => {
